@@ -51,6 +51,11 @@ func getCommands() map[string]cliCommand {
 			description: "Kills the terminal",
 			callback:    exitCallback,
 		},
+		"map": {
+			name:        "map",
+			description: "Prints 20 locations",
+			callback:    mapCallback,
+		},
 	}
 }
 
