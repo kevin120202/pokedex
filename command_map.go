@@ -1,47 +1,42 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
-	"log"
-	"net/http"
+
+	"github.com/kevin120202/pokedex/internal/pokeapi"
 )
 
-type Location struct {
-	Count    int     `json:"count"`
-	Next     *string `json:"next"`
-	Previous *string `json:"previous"`
-	Results  []struct {
-		Name string `json:"name"`
-		URL  string `json:"url"`
-	} `json:"results"`
+func mapCallback(config *config) error {
+	err := mapApiCall(config, config.nextLocationAreaUrl)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func mapCallback() {
-	res, err := http.Get("https://pokeapi.co/api/v2/location?limit=20&offset=20")
+func mapbCallback(config *config) error {
+	err := mapApiCall(config, config.prevLocationAreaUrl)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
-	body, err := io.ReadAll(res.Body)
-	defer res.Body.Close()
+	return nil
+}
 
-	if res.StatusCode > 299 {
-		log.Fatalf("Response failed with status code: %d and\nbody: %s\n", res.StatusCode, body)
-	}
-
+func mapApiCall(config *config, locationUrl *string) error {
+	pokeapiClient := pokeapi.NewClient()
+	res, err := pokeapiClient.ListLocationAreas(locationUrl)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
-	var location Location
-	err = json.Unmarshal(body, &location)
-	if err != nil {
-		fmt.Println(err)
+	config.nextLocationAreaUrl = res.Next
+	config.prevLocationAreaUrl = res.Previous
+
+	for i := 0; i < len(res.Results); i++ {
+		fmt.Printf(" - %s\n", res.Results[i].Name)
 	}
 
-	for i := 0; i < len(location.Results); i++ {
-		fmt.Printf("%d: %s\n", i+1, location.Results[i].Name)
-	}
+	return nil
 }
