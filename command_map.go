@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/kevin120202/pokedex/internal/pokeapi"
@@ -16,6 +17,10 @@ func mapCallback(config *config) error {
 }
 
 func mapbCallback(config *config) error {
+	if config.prevLocationAreaUrl == nil {
+		return errors.New("page unavailable")
+	}
+
 	err := mapApiCall(config, config.prevLocationAreaUrl)
 	if err != nil {
 		return err

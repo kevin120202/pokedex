@@ -29,7 +29,10 @@ func startRepl(config *config) {
 			continue
 		}
 
-		val.callback(config)
+		err := val.callback(config)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
 
@@ -57,7 +60,7 @@ func getCommands() map[string]cliCommand {
 			callback:    mapCallback,
 		},
 		"mapb": {
-			name:        "map",
+			name:        "mapb",
 			description: "Prints previus 20 locations",
 			callback:    mapbCallback,
 		},
