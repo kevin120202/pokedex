@@ -2,10 +2,13 @@ package pokecache
 
 import "time"
 
-func NewCache() Cache {
-	return Cache{
+func NewCache(interval time.Duration) *Cache {
+
+	c := &Cache{
 		cache: make(map[string]cacheEntry),
 	}
+	go c.reapLoop(interval)
+	return c
 }
 
 func (c *Cache) Add(key string, val []byte) {
@@ -30,6 +33,20 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 	return val.val, true
 }
 
-// func (c *Cache) reapLoop() {
+func (c *Cache) reapLoop(interval time.Duration) {
+	ticker := time.NewTicker(interval)
+	defer ticker.Stop()
 
-// }
+	for {
+		<-ticker.C
+		c.mu.Lock()
+
+		for key, value := range c.cache {
+			if time.Since(value.createdAt) > interval {
+				delete(c.cache, key)
+			}
+		}
+
+		c.mu.Unlock()
+	}
+}
