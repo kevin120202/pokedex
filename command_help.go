@@ -1,8 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-func helpCallback(config *config) error {
+	"github.com/kevin120202/pokedex/internal/pokecache"
+)
+
+func helpCallback(config *config, cache *pokecache.Cache) error {
 	fmt.Println()
 	fmt.Println("Welcome to the Pokedex")
 	fmt.Println("Here are your available commands")

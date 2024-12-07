@@ -5,10 +5,11 @@ import (
 	"fmt"
 
 	"github.com/kevin120202/pokedex/internal/pokeapi"
+	"github.com/kevin120202/pokedex/internal/pokecache"
 )
 
-func mapCallback(config *config) error {
-	err := mapApiCall(config, config.nextLocationAreaUrl)
+func mapCallback(config *config, cache *pokecache.Cache) error {
+	err := mapApiCall(config, config.nextLocationAreaUrl, cache)
 	if err != nil {
 		return err
 	}
@@ -16,12 +17,12 @@ func mapCallback(config *config) error {
 	return nil
 }
 
-func mapbCallback(config *config) error {
+func mapbCallback(config *config, cache *pokecache.Cache) error {
 	if config.prevLocationAreaUrl == nil {
 		return errors.New("page unavailable")
 	}
 
-	err := mapApiCall(config, config.prevLocationAreaUrl)
+	err := mapApiCall(config, config.prevLocationAreaUrl, cache)
 	if err != nil {
 		return err
 	}
@@ -29,9 +30,9 @@ func mapbCallback(config *config) error {
 	return nil
 }
 
-func mapApiCall(config *config, locationUrl *string) error {
+func mapApiCall(config *config, locationUrl *string, cache *pokecache.Cache) error {
 	pokeapiClient := pokeapi.NewClient()
-	res, err := pokeapiClient.ListLocationAreas(locationUrl)
+	res, err := pokeapiClient.ListLocationAreas(locationUrl, cache)
 	if err != nil {
 		return err
 	}
