@@ -1,22 +1,64 @@
-// Package pokeapi provides functionality to interact with the PokeAPI
 package pokeapi
 
-// RespShallowLocations represents the response structure from the PokeAPI location-area endpoint
-// It contains pagination information and a list of location areas
 type RespShallowLocations struct {
-	// Count is the total number of location areas available
-	Count int `json:"count"`
-	// Next is a pointer to the URL for the next page of results
-	// It's a pointer because it can be null when there are no more pages
-	Next *string `json:"next"`
-	// Previous is a pointer to the URL for the previous page of results
-	// It's a pointer because it can be null when on the first page
+	Count    int     `json:"count"`
+	Next     *string `json:"next"`
 	Previous *string `json:"previous"`
-	// Results is a slice of location areas, each containing a name and URL
-	Results []struct {
-		// Name is the name of the location area
+	Results  []struct {
 		Name string `json:"name"`
-		// URL is the API endpoint for this specific location area
-		URL string `json:"url"`
+		URL  string `json:"url"`
 	} `json:"results"`
+}
+
+type Location struct {
+	EncounterMethodRates []struct {
+		EncounterMethod struct {
+			Name string `json:"name"`
+			URL  string `json:"url"`
+		} `json:"encounter_method"`
+		VersionDetails []struct {
+			Rate    int `json:"rate"`
+			Version struct {
+				Name string `json:"name"`
+				URL  string `json:"url"`
+			} `json:"version"`
+		} `json:"version_details"`
+	} `json:"encounter_method_rates"`
+	GameIndex int `json:"game_index"`
+	ID        int `json:"id"`
+	Location  struct {
+		Name string `json:"name"`
+		URL  string `json:"url"`
+	} `json:"location"`
+	Name  string `json:"name"`
+	Names []struct {
+		Language struct {
+			Name string `json:"name"`
+			URL  string `json:"url"`
+		} `json:"language"`
+		Name string `json:"name"`
+	} `json:"names"`
+	PokemonEncounters []struct {
+		Pokemon struct {
+			Name string `json:"name"`
+			URL  string `json:"url"`
+		} `json:"pokemon"`
+		VersionDetails []struct {
+			EncounterDetails []struct {
+				Chance          int           `json:"chance"`
+				ConditionValues []interface{} `json:"condition_values"`
+				MaxLevel        int           `json:"max_level"`
+				Method          struct {
+					Name string `json:"name"`
+					URL  string `json:"url"`
+				} `json:"method"`
+				MinLevel int `json:"min_level"`
+			} `json:"encounter_details"`
+			MaxChance int `json:"max_chance"`
+			Version   struct {
+				Name string `json:"name"`
+				URL  string `json:"url"`
+			} `json:"version"`
+		} `json:"version_details"`
+	} `json:"pokemon_encounters"`
 }

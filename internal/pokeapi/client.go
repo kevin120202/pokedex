@@ -1,4 +1,3 @@
-// Package pokeapi provides functionality to interact with the PokeAPI
 package pokeapi
 
 import (
@@ -17,9 +16,6 @@ type Client struct {
 	httpClient http.Client
 }
 
-// NewClient creates and returns a new PokeAPI client
-// It takes a timeout duration to configure the HTTP client
-// This ensures requests don't hang indefinitely
 func NewClient(timeout, cacheInterval time.Duration) Client {
 	return Client{
 		httpClient: http.Client{

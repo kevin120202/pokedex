@@ -1,4 +1,3 @@
-// Package pokeapi provides functionality to interact with the PokeAPI
 package pokeapi
 
 import (
@@ -7,9 +6,6 @@ import (
 	"net/http"
 )
 
-// ListLocations fetches a list of location areas from the PokeAPI
-// It accepts an optional pageURL parameter for pagination
-// Returns the API response and any error that occurred
 func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
 	// Set the default URL if no page URL is provided
 	url := baseURL + "/location-area"

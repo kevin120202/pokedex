@@ -1,4 +1,3 @@
-// Package main contains the command implementations for the Pokedex
 package main
 
 import (
@@ -8,7 +7,7 @@ import (
 
 // commandMapf handles the "map" command to display the next page of locations
 // It fetches location data from the PokeAPI and updates the pagination URLs
-func commandMapf(cfg *config) error {
+func commandMapf(cfg *config, args ...string) error {
 	// Fetch the next page of locations using the current nextLocationsURL
 	// This makes an HTTP request to the PokeAPI
 	locationsResp, err := cfg.pokeapiClient.ListLocations(cfg.nextLocationsURL)
@@ -31,7 +30,7 @@ func commandMapf(cfg *config) error {
 
 // commandMapb handles the "mapb" command to display the previous page of locations
 // It's similar to commandMapf but uses the previous URL instead
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, args ...string) error {
 	// Check if we're on the first page (no previous URL)
 	// Return an error if there's no previous page to go back to
 	if cfg.prevLocationsURL == nil {

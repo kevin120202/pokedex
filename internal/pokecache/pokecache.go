@@ -1,4 +1,3 @@
-// Package pokecache provides a caching mechanism for PokeAPI responses
 package pokecache
 
 import (
