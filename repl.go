@@ -1,11 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"strings"
 
+	"github.com/chzyer/readline"
 	"github.com/kevin120202/pokedex/internal/pokeapi"
 )
 
@@ -18,13 +17,25 @@ type config struct {
 
 func startRepl(cfg *config) {
 	// Create a new scanner to read from standard input (keyboard)
-	reader := bufio.NewScanner(os.Stdin)
+	// reader := bufio.NewScanner(os.Stdin)
+	rl, err := readline.New("Pokedex > ")
+	if err != nil {
+		panic(err)
+	}
+	defer rl.Close()
+
+	historyFile := ".pokedex_history"
+	rl.SetHistoryPath(historyFile)
 
 	for {
-		fmt.Print("Pokedex > ")
+		// fmt.Print("Pokedex > ")
 		// Read a line of input from the user
-		reader.Scan()
-		words := cleanInput(reader.Text())
+		// reader.Scan()
+		line, err := rl.Readline()
+		if err != nil {
+			break
+		}
+		words := cleanInput(line)
 		if len(words) == 0 {
 			continue
 		}
