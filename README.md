@@ -11,29 +11,6 @@ A command-line interface (CLI) application built in Go that allows users to expl
 - **API Caching**: Intelligent caching system to reduce API calls and improve performance
 - **Error Handling**: Robust error handling for network issues and invalid inputs
 
-## 📋 Prerequisites
-
-- Go 1.24.2 or higher
-- Internet connection (for API calls)
-
-## 🛠️ Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/kevin120202/pokedex.git
-   cd pokedex
-   ```
-
-2. **Build the application**:
-   ```bash
-   go build -o pokedex
-   ```
-
-3. **Run the application**:
-   ```bash
-   ./pokedex
-   ```
-
 ## 🎮 Usage
 
 Once you start the application, you'll see a prompt like `Pokedex >`. Here are the available commands:
